@@ -1,6 +1,7 @@
 import requests
 import time
 from concurrent.futures import ThreadPoolExecutor
+import subprocess
 
 def test_latency(url):
     try:
@@ -79,6 +80,11 @@ def main():
 
     selected_source = sources[int(selected_source_index) - 1][1]
     print(f"已选择源：{selected_source}")
+    
+    # 提取域名,执行命令
+    trusted_domain = selected_source.split("//")[-1].split("/")[0]
+    pip_command = ['pip', 'config', 'set', 'global.index-url', selected_source, '--trusted-host', trusted_domain]
+    subprocess.run(pip_command)
 
     input("按 Enter 退出")
 
