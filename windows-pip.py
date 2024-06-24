@@ -83,10 +83,18 @@ def main():
     
     # 提取域名,执行命令
     trusted_domain = selected_source.split("//")[-1].split("/")[0]
-    pip_command = ['pip', 'config', 'set', 'global.index-url', selected_source, '--trusted-host', trusted_domain]
+    pip_command = ['pip', 'config', 'set', 'global.index-url', selected_source, '--trusted-host', trusted_domain, '--user']
     subprocess.run(pip_command)
 
     input("按 Enter 退出")
 
 if __name__ == "__main__":
+    # 要安装的包名
+    package_name = "requests"
+
+    # 执行pip安装命令
+    mirror_url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+    install_command = f"pip install -i {mirror_url} {package_name}"
+    subprocess.run(install_command, shell=True, check=True)
+
     main()
